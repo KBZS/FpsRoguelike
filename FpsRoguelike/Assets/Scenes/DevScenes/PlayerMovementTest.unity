@@ -217,9 +217,8 @@ GameObject:
   - component: {fileID: 795564380}
   - component: {fileID: 795564383}
   - component: {fileID: 795564382}
-  - component: {fileID: 795564381}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: TempForm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,20 +238,6 @@ Transform:
   m_Father: {fileID: 1058209815}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &795564381
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 795564379}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &795564382
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -314,6 +299,7 @@ GameObject:
   - component: {fileID: 1058209816}
   - component: {fileID: 1058209814}
   - component: {fileID: 1058209819}
+  - component: {fileID: 1058209818}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -367,6 +353,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &1058209818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058209813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1508e6a5a62108440ba422966c4f399e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _crouchStep: 5
+  _crouchedHeight: 0.8
+  _capsuleCollider: {fileID: 1058209814}
 --- !u!114 &1058209819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,8 +380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b329ca207a64f54bb602c9bcb45b9e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RayLength: 0.2
-  Offset: {x: 0, y: 0, z: 0}
+  _rayLength: 0
+  _offset: {x: 0, y: 0, z: 0}
 --- !u!1 &1274892977
 GameObject:
   m_ObjectHideFlags: 0
