@@ -6,16 +6,16 @@ public class GroundedCheck : MonoBehaviour
 {
     public bool IsGrounded { get; private set; }
 
-    [Min(0), SerializeField] private float RayLength;
-    [SerializeField] private Vector3 Offset;
+    [Min(0), SerializeField] private float _rayLength;
+    [SerializeField] private Vector3 _offset;
 
     void FixedUpdate()
     {
         Vector3 pos = GetRayStartPosition();
-        IsGrounded = Physics.Raycast(pos, Vector3.down, RayLength);
+        IsGrounded = Physics.Raycast(pos, Vector3.down, _rayLength);
     }
 
-    Vector3 GetRayStartPosition() => transform.position + Offset;
+    Vector3 GetRayStartPosition() => transform.position + _offset;
 
 #if UNITY_EDITOR
 
@@ -23,7 +23,7 @@ public class GroundedCheck : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Vector3 pos = GetRayStartPosition();
-        Gizmos.DrawLine(pos, pos + Vector3.down * RayLength);
+        Gizmos.DrawLine(pos, pos + Vector3.down * _rayLength);
     }
 
 #endif
