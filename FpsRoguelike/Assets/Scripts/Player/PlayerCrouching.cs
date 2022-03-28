@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider))]
 public class PlayerCrouching : MonoBehaviour
 {
-    public bool IsCrouched { get; private set; }
+    public bool IsCrouched { get; private set; } = false;
 
     [SerializeField, Min(0.01f)] private float _crouchStep;
     [SerializeField, Min(0)] private float _crouchedHeight;
@@ -52,7 +52,7 @@ public class PlayerCrouching : MonoBehaviour
         _capsuleCollider.height = moveDown? _crouchedHeight : _playerHeight;
         _capsuleCollider.center = Vector3.up / 2 * _capsuleCollider.height;
         Camera.main.transform.localPosition = (_capsuleCollider.height - _cameraOffsetY) * Vector3.up;
-        IsCrouched = !moveDown;
+        IsCrouched = moveDown;
     }
 
 #if UNITY_EDITOR
