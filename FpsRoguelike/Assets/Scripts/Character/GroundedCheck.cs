@@ -1,18 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GroundedCheck : MonoBehaviour
 {
     public bool IsGrounded { get; private set; }
 
+    public UnityEvent OnGetOffTheGround;
+    public UnityEvent OnGetGrounded;
+
     [Min(0), SerializeField] private float _rayLength;
     [SerializeField] private Vector3 _offset;
 
-    void FixedUpdate()
+    private void Awake()
+    {
+        if (OnGetOffTheGround == null)
+            OnGetOffTheGround = new UnityEvent();
+        if (OnGetGrounded == null)
+            OnGetGrounded = new UnityEvent();
+    }
+
+    void Update()
     {
         Vector3 pos = GetRayStartPosition();
-        IsGrounded = Physics.Raycast(pos, Vector3.down, _rayLength);
+        bool temp = Physics.Raycast(pos, Vector3.down, _rayLength);
+
+        if (temp && temp != IsGrounded)
+        {
+            IsGrounded = temp;
+            OnGetGrounded.Invoke();
+        }
+        if (!temp && temp != IsGrounded)
+        {
+            IsGrounded = temp;
+            OnGetOffTheGround.Invoke();
+        }
     }
 
     Vector3 GetRayStartPosition() => transform.position + _offset;
