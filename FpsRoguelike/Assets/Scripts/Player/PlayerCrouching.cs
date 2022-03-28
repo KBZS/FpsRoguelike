@@ -38,12 +38,25 @@ public class PlayerCrouching : MonoBehaviour
         }
     }
 
+    private bool CanMoveUp()
+    {
+        const float RAY_OFFSET_Y = -0.2f;
+        const float RAY_DISTANCE = .3f;
+        Vector3 rayStartPos = transform.position + Vector3.up * (_capsuleCollider.height + RAY_OFFSET_Y);
+        return !Physics.Raycast(rayStartPos, Vector3.up, RAY_DISTANCE);
+    }
+
     IEnumerator Sit(bool moveDown)
     {
         IsCrouched = true;
         var wait = new WaitForEndOfFrame();
         while (moveDown? _capsuleCollider.height > _crouchedHeight : _capsuleCollider.height < _playerHeight)
         {
+            if (!moveDown && !CanMoveUp())
+            { 
+                yield return wait;
+                continue;
+            }
             _capsuleCollider.height += (moveDown? -1 : 1) * _crouchStep * Time.deltaTime;
             _capsuleCollider.center = Vector3.up / 2 * _capsuleCollider.height;
             Camera.main.transform.localPosition = (_capsuleCollider.height - _cameraOffsetY) * Vector3.up;
