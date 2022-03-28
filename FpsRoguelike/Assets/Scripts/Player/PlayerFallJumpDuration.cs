@@ -13,8 +13,8 @@ public class PlayerFallJumpDuration : MonoBehaviour
     void Update()
     {
         if (_rigidbody.velocity.y < 0 && !Input.GetKey(KeyCode.Space))
-            _rigidbody.velocity += Vector3.up * Physics2D.gravity.y * (_fallMultiplier - 1) * Time.deltaTime;
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * (_fallMultiplier - 1) * Time.deltaTime;
         else if (_rigidbody.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
-            _rigidbody.velocity += Vector3.up * Physics2D.gravity.y * (_lowJumpMultiplier - 1) * Time.deltaTime;
+            _rigidbody.velocity += Vector3.up * Physics.gravity.y * (_lowJumpMultiplier - 1) * Time.deltaTime;
     }
 }
