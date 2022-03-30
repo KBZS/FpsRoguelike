@@ -25,7 +25,9 @@ public class PlayerJump : MonoBehaviour
         if (_leftJumpsCount > 0 && Input.GetKeyDown(KeyCode.Space))
         {
             _leftJumpsCount--;
-            _rigidbody.velocity = Vector3.zero;
+            Vector3 velocity = _rigidbody.velocity;
+            velocity.y = 0;
+            _rigidbody.velocity = velocity;
             _rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
     }

@@ -16,23 +16,28 @@ public class PlayerHorizontalMovement : MonoBehaviour
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private PlayerCrouching _playerCrouching;
 
+    private Vector3 _impulse;
+
     void Update()
     {
         float xTranslation = Input.GetAxis("Horizontal");
         float zTranslation = Input.GetAxis("Vertical");
-        Vector3 translation = new Vector3(xTranslation, 0, zTranslation).normalized * Time.deltaTime;
+        _impulse = new Vector3(xTranslation, 0, zTranslation).normalized;
 
         if (_groundedCheck.IsGrounded)
         { 
             if (_playerCrouching.IsCrouched)
-                translation *= _crouchSpeed;
+                _impulse *= _crouchSpeed;
             else
-                translation *= Input.GetKey(KeyCode.LeftShift)? _runSpeed : _walkSpeed;
+                _impulse *= Input.GetKey(KeyCode.LeftShift)? _runSpeed : _walkSpeed;
         }
         else
-            translation *= _speedInAir;
+            _impulse *= _speedInAir;
+    }
 
-        transform.Translate(translation);
+    void FixedUpdate()
+    {
+        _rigidbody.AddRelativeForce(_impulse, ForceMode.Impulse);
     }
 
 #if UNITY_EDITOR

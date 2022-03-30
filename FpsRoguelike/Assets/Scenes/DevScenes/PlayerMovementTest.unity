@@ -1270,6 +1270,7 @@ GameObject:
   - component: {fileID: 1058209821}
   - component: {fileID: 1058209822}
   - component: {fileID: 1058209823}
+  - component: {fileID: 1058209826}
   - component: {fileID: 1058209825}
   - component: {fileID: 1058209824}
   m_Layer: 0
@@ -1431,10 +1432,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce30a2bf9c3c13941bc6fa56c746ce44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _walkSpeed: 7
-  _runSpeed: 15
-  _speedInAir: 10
-  _crouchSpeed: 3
+  _walkSpeed: 1.5
+  _runSpeed: 3
+  _speedInAir: 0.5
+  _crouchSpeed: 0.8
   _groundedCheck: {fileID: 1058209819}
   _rigidbody: {fileID: 1058209816}
   _playerCrouching: {fileID: 1058209818}
@@ -1469,6 +1470,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _maxHealth: 150
+--- !u!114 &1058209826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058209813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76092e6da94970b4eb4c2c92a37e7cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DragFactor: 0.1
+  _rigidbody: {fileID: 1058209816}
 --- !u!1 &1120366336
 GameObject:
   m_ObjectHideFlags: 0
