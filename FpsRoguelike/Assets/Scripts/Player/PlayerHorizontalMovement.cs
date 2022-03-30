@@ -16,25 +16,28 @@ public class PlayerHorizontalMovement : MonoBehaviour
     
     [Space(20)]
     [SerializeField] private GroundedCheck _groundedCheck;
+    [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private PlayerCrouching _playerCrouching;
+
+    private Vector3 _impulse;
 
     void Update()
     {
         Vector2 inputVector = _inputController.GetMoveVector();
-        Vector3 translation = new Vector3(inputVector.x, 0, inputVector.y).normalized * Time.deltaTime;
+        _impulse = new Vector3(inputVector.x, 0.0f, inputVector.y).normalized;
 
         if (_groundedCheck.IsGrounded)
         {
             if (_playerCrouching.IsCrouched)
-                translation *= _crouchSpeed;
+                _impulse *= _crouchSpeed;
             else
-                translation *= _inputController.GetRunHold() ? _runSpeed : _walkSpeed;
+                _impulse *= _inputController.GetRunHold() ? _runSpeed : _walkSpeed;
         }
         else
-            translation *= _speedInAir;
-
-        transform.Translate(translation);
+            _impulse *= _speedInAir;
     }
+
+    void FixedUpdate() => _rigidbody.AddRelativeForce(_impulse, ForceMode.Impulse);
 
 #if UNITY_EDITOR
 

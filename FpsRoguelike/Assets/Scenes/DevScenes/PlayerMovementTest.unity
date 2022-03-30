@@ -1259,6 +1259,7 @@ GameObject:
   - component: {fileID: 1058209820}
   - component: {fileID: 1058209821}
   - component: {fileID: 1058209822}
+  - component: {fileID: 1058209828}
   - component: {fileID: 1058209825}
   - component: {fileID: 1058209824}
   m_Layer: 0
@@ -1421,10 +1422,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputController: {fileID: 1058209827}
   _walkSpeed: 7
-  _runSpeed: 15
+  _runSpeed: 14
   _speedInAir: 10
   _crouchSpeed: 3
   _groundedCheck: {fileID: 1058209819}
+  _rigidbody: {fileID: 1058209816}
   _playerCrouching: {fileID: 1058209818}
 --- !u!114 &1058209824
 MonoBehaviour:
@@ -1500,6 +1502,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerInput: {fileID: 1058209826}
+--- !u!114 &1058209828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058209813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76092e6da94970b4eb4c2c92a37e7cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DragFactor: 0.704
+  _rigidbody: {fileID: 1058209816}
 --- !u!1 &1120366336
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,10 +24,15 @@ public class PlayerJump : MonoBehaviour
 
     void Update()
     {
-        if (_leftJumpsCount > 0 && (_inputController.GetJumpPressedDown() || (_groundedCheck.IsGrounded && _inputController.GetJumpHold())))
+        if (_leftJumpsCount > 0 && _inputController.GetJumpPressedDown())
         {
             _leftJumpsCount--;
-            _rigidbody.velocity = Vector3.zero;
+            Debug.Log("JUMP! " + _leftJumpsCount);
+
+            Vector3 velocity = _rigidbody.velocity;
+            velocity.y = 0.0f;
+            _rigidbody.velocity = velocity;
+
             _rigidbody.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
     }
