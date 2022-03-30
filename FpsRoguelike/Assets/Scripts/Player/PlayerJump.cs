@@ -27,7 +27,6 @@ public class PlayerJump : MonoBehaviour
         if (_leftJumpsCount > 0 && _inputController.GetJumpPressedDown())
         {
             _leftJumpsCount--;
-            Debug.Log("JUMP! " + _leftJumpsCount);
 
             Vector3 velocity = _rigidbody.velocity;
             velocity.y = 0.0f;
