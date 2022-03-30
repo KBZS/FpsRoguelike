@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(GroundedCheck), typeof(PlayerCrouching), typeof(Rigidbody))]
 public class PlayerHorizontalMovement : MonoBehaviour
 {
+    [SerializeField] private PlayerInputController _inputController;
+
     [Header("SPEED")]
     [SerializeField, Min(0)] private float _walkSpeed;
     [SerializeField, Min(0)] private float _runSpeed;
@@ -13,21 +16,19 @@ public class PlayerHorizontalMovement : MonoBehaviour
     
     [Space(20)]
     [SerializeField] private GroundedCheck _groundedCheck;
-    [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private PlayerCrouching _playerCrouching;
 
     void Update()
     {
-        float xTranslation = Input.GetAxis("Horizontal");
-        float zTranslation = Input.GetAxis("Vertical");
-        Vector3 translation = new Vector3(xTranslation, 0, zTranslation).normalized * Time.deltaTime;
+        Vector2 inputVector = _inputController.GetMoveVector();
+        Vector3 translation = new Vector3(inputVector.x, 0, inputVector.y).normalized * Time.deltaTime;
 
         if (_groundedCheck.IsGrounded)
-        { 
+        {
             if (_playerCrouching.IsCrouched)
                 translation *= _crouchSpeed;
             else
-                translation *= Input.GetKey(KeyCode.LeftShift)? _runSpeed : _walkSpeed;
+                translation *= _inputController.GetRunHold() ? _runSpeed : _walkSpeed;
         }
         else
             translation *= _speedInAir;

@@ -5,11 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider))]
 public class PlayerCrouching : MonoBehaviour
 {
-    public bool IsCrouched { get; private set; } = false;
+    [SerializeField] private PlayerInputController _inputController;
 
     [SerializeField, Min(0.01f)] private float _crouchStep;
     [SerializeField, Min(0)] private float _crouchedHeight;
     [SerializeField] private CapsuleCollider _capsuleCollider;
+
+    public bool IsCrouched { get; private set; } = false;
 
     private float _playerHeight;
     private float _cameraOffsetY;
@@ -23,14 +25,13 @@ public class PlayerCrouching : MonoBehaviour
 
     void Update()
     {
-        // TODO: Create Input Manager
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (_inputController.GetCrouchHold())
         {
             if (_sitCoroutine != null)
                 StopCoroutine(_sitCoroutine);
             _sitCoroutine = StartCoroutine(Sit(true));
-        }    
-        if (Input.GetKeyUp(KeyCode.LeftControl))
+        }
+        else if (_capsuleCollider.height < _playerHeight)
         {
             if (_sitCoroutine != null)
                 StopCoroutine(_sitCoroutine);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +6,13 @@ using UnityEngine.Events;
 
 public class GroundedCheck : MonoBehaviour
 {
-    public bool IsGrounded { get; private set; }
-
-    public UnityEvent OnGetOffTheGround;
-    public UnityEvent OnGetGrounded;
-
     [Min(0), SerializeField] private float _rayLength;
     [SerializeField] private Vector3 _offset;
+
+    [NonSerialized] public UnityEvent OnGetOffTheGround;
+    [NonSerialized] public UnityEvent OnGetGrounded;
+
+    public bool IsGrounded { get; private set; }
 
     private void Awake()
     {

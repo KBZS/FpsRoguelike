@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(GroundedCheck)), RequireComponent(typeof(Rigidbody))]
 public class PlayerJump : MonoBehaviour
 {
+    [SerializeField] private PlayerInputController _inputController;
+
     [SerializeField, Min(0)] private float _jumpHeight;
     [SerializeField, Min(0)] private int _maxJumpsCount;
     [SerializeField] private Rigidbody _rigidbody;
@@ -22,7 +24,7 @@ public class PlayerJump : MonoBehaviour
 
     void Update()
     {
-        if (_leftJumpsCount > 0 && Input.GetKeyDown(KeyCode.Space))
+        if (_leftJumpsCount > 0 && (_inputController.GetJumpPressedDown() || (_groundedCheck.IsGrounded && _inputController.GetJumpHold())))
         {
             _leftJumpsCount--;
             _rigidbody.velocity = Vector3.zero;
