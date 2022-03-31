@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CapsuleCollider))]
 public class PlayerCrouching : MonoBehaviour
 {
-    [SerializeField] private PlayerInputController _inputController;
+    [SerializeField] private PlayerInput _playerInput;
 
     [SerializeField, Min(0.01f)] private float _crouchStep;
     [SerializeField, Min(0)] private float _crouchedHeight;
@@ -25,7 +26,7 @@ public class PlayerCrouching : MonoBehaviour
 
     void Update()
     {
-        if (_inputController.GetCrouchHold())
+        if (PlayerInputController.GetCrouchHold(_playerInput))
         {
             if (_sitCoroutine != null)
                 StopCoroutine(_sitCoroutine);

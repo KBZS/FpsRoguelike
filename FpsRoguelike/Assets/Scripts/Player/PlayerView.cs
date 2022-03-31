@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerView : MonoBehaviour
 {
-    [SerializeField] private PlayerInputController _inputController;
+    [SerializeField] private PlayerInput _playerInput;
 
     [SerializeField, Range(30, 179)] private float _verticalAngle;
     [SerializeField, Min(0.001f)] private float _horizontalTurnSpeed = 0.2f;
@@ -15,7 +16,7 @@ public class PlayerView : MonoBehaviour
 
     void Update()
     {
-        Vector2 rawLookVector = _inputController.GetLookVector();
+        Vector2 rawLookVector = PlayerInputController.GetLookVector(_playerInput);
         Vector2 lookVector = new Vector2(rawLookVector.x * _horizontalTurnSpeed, rawLookVector.y * _verticalTurnSpeed);
 
         _xAxis = Mathf.Clamp(_xAxis + (_verticalInvertion ? lookVector.y : -lookVector.y), -_verticalAngle / 2, _verticalAngle / 2);

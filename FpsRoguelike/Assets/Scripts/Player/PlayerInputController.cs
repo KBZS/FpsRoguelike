@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputController : MonoBehaviour
+public static class PlayerInputController
 {
-    [SerializeField] private PlayerInput _playerInput;
-
     // Player actions' const string titles
     private const string MOVE = "Move";
     private const string LOOK = "Look";
@@ -15,23 +11,23 @@ public class PlayerInputController : MonoBehaviour
     private const string CROUCH = "Crouch";
     private const string RUN = "Run";
 
-    public Vector2 GetMoveVector() => _playerInput.actions[MOVE].ReadValue<Vector2>();
+    public static Vector2 GetMoveVector(PlayerInput playerInput) => playerInput.actions[MOVE].ReadValue<Vector2>();
 
-    public Vector2 GetLookVector() => _playerInput.actions[LOOK].ReadValue<Vector2>();
+    public static Vector2 GetLookVector(PlayerInput playerInput) => playerInput.actions[LOOK].ReadValue<Vector2>();
 
-    public bool GetFirePressedDown() => _playerInput.actions[FIRE].triggered && GetFireHold();
+    public static bool GetFirePressedDown(PlayerInput playerInput) => playerInput.actions[FIRE].triggered && GetFireHold(playerInput);
 
-    public bool GetFireHold() => _playerInput.actions[FIRE].IsPressed();
+    public static bool GetFireHold(PlayerInput playerInput) => playerInput.actions[FIRE].IsPressed();
 
-    public bool GetJumpPressedDown() => _playerInput.actions[JUMP].triggered && GetJumpHold();
+    public static bool GetJumpPressedDown(PlayerInput playerInput) => playerInput.actions[JUMP].triggered && GetJumpHold(playerInput);
 
-    public bool GetJumpHold() => _playerInput.actions[JUMP].IsPressed();
+    public static bool GetJumpHold(PlayerInput playerInput) => playerInput.actions[JUMP].IsPressed();
 
-    public bool GetCrouchPressedDown() => _playerInput.actions[CROUCH].triggered && GetCrouchHold();
+    public static bool GetCrouchPressedDown(PlayerInput playerInput) => playerInput.actions[CROUCH].triggered && GetCrouchHold(playerInput);
 
-    public bool GetCrouchHold() => _playerInput.actions[CROUCH].IsPressed();
+    public static bool GetCrouchHold(PlayerInput playerInput) => playerInput.actions[CROUCH].IsPressed();
 
-    public bool GetRunPressedDown() => _playerInput.actions[RUN].triggered && GetRunHold();
+    public static bool GetRunPressedDown(PlayerInput playerInput) => playerInput.actions[RUN].triggered && GetRunHold(playerInput);
 
-    public bool GetRunHold() => _playerInput.actions[RUN].IsPressed();
+    public static bool GetRunHold(PlayerInput playerInput) => playerInput.actions[RUN].IsPressed();
 }

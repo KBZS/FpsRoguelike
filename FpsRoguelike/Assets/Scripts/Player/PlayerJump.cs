@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(GroundedCheck)), RequireComponent(typeof(Rigidbody))]
 public class PlayerJump : MonoBehaviour
 {
-    [SerializeField] private PlayerInputController _inputController;
+    [SerializeField] private PlayerInput _playerInput;
 
     [SerializeField, Min(0)] private float _jumpHeight;
     [SerializeField, Min(0)] private int _maxJumpsCount;
@@ -24,7 +25,7 @@ public class PlayerJump : MonoBehaviour
 
     void Update()
     {
-        if (_leftJumpsCount > 0 && _inputController.GetJumpPressedDown())
+        if (_leftJumpsCount > 0 && PlayerInputController.GetJumpPressedDown(_playerInput))
         {
             _leftJumpsCount--;
 

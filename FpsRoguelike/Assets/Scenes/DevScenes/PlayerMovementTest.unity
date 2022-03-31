@@ -1252,7 +1252,6 @@ GameObject:
   - component: {fileID: 1058209814}
   - component: {fileID: 1058209817}
   - component: {fileID: 1058209826}
-  - component: {fileID: 1058209827}
   - component: {fileID: 1058209823}
   - component: {fileID: 1058209819}
   - component: {fileID: 1058209818}
@@ -1340,7 +1339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1508e6a5a62108440ba422966c4f399e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputController: {fileID: 1058209827}
+  _playerInput: {fileID: 1058209826}
   _crouchStep: 5
   _crouchedHeight: 0.8
   _capsuleCollider: {fileID: 1058209814}
@@ -1370,7 +1369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69f34b9d87cf78843949931026b677e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputController: {fileID: 1058209827}
+  _playerInput: {fileID: 1058209826}
   _jumpHeight: 5
   _maxJumpsCount: 3
   _rigidbody: {fileID: 1058209816}
@@ -1387,11 +1386,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b18b5244b87374aa75367503476138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputController: {fileID: 1058209827}
+  _playerInput: {fileID: 1058209826}
   _fallMultiplier: 5
   _lowJumpMultiplier: 5
   _rigidbody: {fileID: 1058209816}
-  _playerInput: {fileID: 0}
 --- !u!114 &1058209822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,7 +1402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaab96d47e6f53646b02495d46c8380e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputController: {fileID: 1058209827}
+  _playerInput: {fileID: 1058209826}
   _verticalAngle: 179
   _horizontalTurnSpeed: 0.2
   _verticalTurnSpeed: 0.2
@@ -1420,7 +1418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce30a2bf9c3c13941bc6fa56c746ce44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputController: {fileID: 1058209827}
+  _playerInput: {fileID: 1058209826}
   _walkSpeed: 7
   _runSpeed: 14
   _speedInAir: 10
@@ -1489,19 +1487,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1058209827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058209813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f49cd04c1d0a3469640ab5a3dea39b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerInput: {fileID: 1058209826}
 --- !u!114 &1058209828
 MonoBehaviour:
   m_ObjectHideFlags: 0

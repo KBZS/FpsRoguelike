@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(GroundedCheck), typeof(PlayerCrouching), typeof(Rigidbody))]
 public class PlayerHorizontalMovement : MonoBehaviour
 {
-    [SerializeField] private PlayerInputController _inputController;
+    [SerializeField] private PlayerInput _playerInput;
 
     [Header("SPEED")]
     [SerializeField, Min(0)] private float _walkSpeed;
@@ -23,7 +23,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
 
     void Update()
     {
-        Vector2 inputVector = _inputController.GetMoveVector();
+        Vector2 inputVector = PlayerInputController.GetMoveVector(_playerInput);
         _impulse = new Vector3(inputVector.x, 0.0f, inputVector.y).normalized;
 
         if (_groundedCheck.IsGrounded)
@@ -31,7 +31,7 @@ public class PlayerHorizontalMovement : MonoBehaviour
             if (_playerCrouching.IsCrouched)
                 _impulse *= _crouchSpeed;
             else
-                _impulse *= _inputController.GetRunHold() ? _runSpeed : _walkSpeed;
+                _impulse *= PlayerInputController.GetRunHold(_playerInput) ? _runSpeed : _walkSpeed;
         }
         else
             _impulse *= _speedInAir;
