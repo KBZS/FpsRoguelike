@@ -10,20 +10,17 @@ public class PlayerView : MonoBehaviour
     private float _xAxis = 0f;
     private float _turnSpeed = 0.2f;
 
-    private const string INVERTION_PREF = "inv";
-    private const string SENSITIVITY_PREF = "sens";
-
     void Awake()
     {
-        if (PlayerPrefs.HasKey(INVERTION_PREF))
-            UpdateVerticalInversion(PlayerPrefs.GetInt(INVERTION_PREF) == 1, false);
+        if (PlayerPrefs.HasKey(PrefsNamesHelper.INVERTION_PREF))
+            UpdateVerticalInversion(PlayerPrefs.GetInt(PrefsNamesHelper.INVERTION_PREF) == 1, false);
         else
-            PlayerPrefs.SetInt(INVERTION_PREF, 0);
+            PlayerPrefs.SetInt(PrefsNamesHelper.INVERTION_PREF, 0);
 
-        if (PlayerPrefs.HasKey(SENSITIVITY_PREF))
-            UpdateSensitivity(PlayerPrefs.GetFloat(SENSITIVITY_PREF), false);
+        if (PlayerPrefs.HasKey(PrefsNamesHelper.SENSITIVITY_PREF))
+            UpdateSensitivity(PlayerPrefs.GetFloat(PrefsNamesHelper.SENSITIVITY_PREF), false);
         else
-            PlayerPrefs.SetFloat(SENSITIVITY_PREF, _turnSpeed);
+            PlayerPrefs.SetFloat(PrefsNamesHelper.SENSITIVITY_PREF, _turnSpeed);
     }
 
     void Update()
@@ -41,14 +38,14 @@ public class PlayerView : MonoBehaviour
     {
         _verticalInvertion = isInverted;
         if (setPref)
-            PlayerPrefs.SetInt(INVERTION_PREF, isInverted ? 1 : 0);
+            PlayerPrefs.SetInt(PrefsNamesHelper.INVERTION_PREF, isInverted ? 1 : 0);
     }
 
     public void UpdateSensitivity(float sensitivity, bool setPref = true)
     {
         _turnSpeed = sensitivity;
         if (setPref)
-            PlayerPrefs.SetFloat(SENSITIVITY_PREF, sensitivity);
+            PlayerPrefs.SetFloat(PrefsNamesHelper.SENSITIVITY_PREF, sensitivity);
     }
 
     public bool GetVerticalInversion() => _verticalInvertion;

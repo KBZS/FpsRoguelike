@@ -6,11 +6,9 @@ public class RebindSaveLoad : MonoBehaviour
 {
     [SerializeField] private InputActionAsset _actions;
 
-    private const string REBINDS_NAME = "rebindsSave.json";
-
     void Awake()
     {
-        string path = Path.Combine(Application.persistentDataPath, REBINDS_NAME);
+        string path = PathsHelper.REBINDS_PATH;
         if (File.Exists(path))
         {
             string rebinds = File.ReadAllText(path);
@@ -22,6 +20,6 @@ public class RebindSaveLoad : MonoBehaviour
     void OnDisable()
     {
         string rebinds = _actions.SaveBindingOverridesAsJson();
-        File.WriteAllText(Path.Combine(Application.persistentDataPath, REBINDS_NAME), rebinds);
+        File.WriteAllText(PathsHelper.REBINDS_PATH, rebinds);
     }
 }

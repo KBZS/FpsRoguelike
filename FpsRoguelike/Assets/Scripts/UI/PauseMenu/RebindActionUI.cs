@@ -63,8 +63,6 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         private const string MOUSE_RIGHT_IGNORE = "<Mouse>/rightButton";
         private const string KEYBOARD_ESCAPE_IGNORE = "<Keyboard>/escape";
 
-        //private InputActionRebindingExtensions.RebindingOperation ongoingRebind => m_RebindOperation;
-
         void OnEnable()
         {
             if (s_RebindActionUIs == null)
