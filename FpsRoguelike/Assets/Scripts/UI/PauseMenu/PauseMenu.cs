@@ -65,6 +65,8 @@ public class PauseMenu : MonoBehaviour
         _content.SetActive(false);
         _backInputAction.Enable();
 
+        ToggleCursor(false);
+
         _currentPanel = _menu;
         SetTextsAndButtons();
     }
@@ -80,8 +82,8 @@ public class PauseMenu : MonoBehaviour
             isPaused = !isPaused;
             Time.timeScale = isPaused ? 0.0f : 1.0f;
             _playerInput.SwitchCurrentActionMap(isPaused ? "UI" : "Player");
-
             _content.SetActive(isPaused);
+            ToggleCursor(isPaused);
 
             if (isPaused)
             {
@@ -171,6 +173,12 @@ public class PauseMenu : MonoBehaviour
         _currentPanel.SetActive(false);
         panel.SetActive(true);
         _currentPanel = panel;
+    }
+
+    void ToggleCursor(bool isOn)
+    {
+        Cursor.lockState = isOn ? CursorLockMode.Confined : CursorLockMode.Locked;
+        Cursor.visible = isOn;
     }
 
     void ExitGame()
