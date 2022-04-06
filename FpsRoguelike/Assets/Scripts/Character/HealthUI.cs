@@ -29,4 +29,9 @@ public class HealthUI : MonoBehaviour
             _healthSlider.value = args.CurrentHealth;
         }
     }
+
+    private void OnDestroy()
+    {
+        _health.OnHealthValueChanged.RemoveListener(UpdateUI);
+    }
 }
