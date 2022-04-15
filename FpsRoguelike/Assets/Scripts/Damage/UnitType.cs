@@ -5,5 +5,6 @@ using UnityEngine;
 public enum  UnitType
 {
     Player,
-    Turret
+    Turret,
+    FlippedOverTurret
 }
