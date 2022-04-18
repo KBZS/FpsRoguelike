@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 public class ListScroller : InteractiveElement
 {
+    [SerializeField] private RectTransform _parentRect = null;
     [SerializeField] private GameObject _scrollElementPrefab = null;
     [SerializeField] private ScrollerParameters _scrollerParameters = null;
     [SerializeField] private float _maxSize = 0.0f;
@@ -17,13 +18,14 @@ public class ListScroller : InteractiveElement
     [SerializeField] private RectTransform _scrollerParent = null;
     [SerializeField] private RectTransform _scroller = null;
 
-    protected List<ScrollableElement> scrollableElements = new List<ScrollableElement>();
-    private List<object> _initialData = new List<object>();
-    private List<object> _scrollData = new List<object>();
+    private bool _directionHorizontal = false;
+    private bool _directionRight = false;
+    private bool _directionLeft = false;
+    private bool _directionUp = false;
+    private bool _directionDown = false;
 
     private bool _parametersInit = false;
 
-    private RectTransform _parentRect = null;
     private float _rectHeight = 0.0f;
     private float _rectWidth = 0.0f;
     private float _parentTop = 0.0f;
@@ -41,24 +43,23 @@ public class ListScroller : InteractiveElement
     private bool _scrollable = false;
     private float _scrollStartTime = 0.0f;
     private float _clickDifference = 0.0f;
+
     private float _lastClickPos = 0.0f;
     private Vector2 _startClickPos = Vector2.zero;
     private bool _startedDragging = false;
 
-    private bool _directionHorizontal = false;
-    private bool _directionRight = false;
-    private bool _directionLeft = false;
-    private bool _directionUp = false;
-    private bool _directionDown = false;
+    protected List<ScrollableElement> scrollableElements = new List<ScrollableElement>();
+    private List<object> _initialData = new List<object>();
+    private List<object> _scrollData = new List<object>();
 
     void InitParameters()
     {
-        _parentRect = GetComponent<RectTransform>();
         SetDirections();
         SetParentDimensions();
         SetParentPivot(_parentRect);
 
         GameObject scrollableGameObject = Instantiate(_scrollElementPrefab, _parentRect);
+
         scrollableGameObject.SetActive(false);
         ScrollableElement scrollableElement = scrollableGameObject.GetComponent<ScrollableElement>();
         scrollableElements.Add(scrollableElement);
@@ -69,24 +70,6 @@ public class ListScroller : InteractiveElement
         _rectWidth = scrollableElement.parentRect.rect.width / CanvasScaleManager.screenScalerRatio.x;
 
         SetMaxElementCount();
-    }
-
-    void SetDirections()
-    {
-        _directionHorizontal = Mathf.Abs(_direction.x) > Mathf.Epsilon;
-        _directionRight = false;
-        _directionLeft = false;
-        _directionUp = false;
-        _directionDown = false;
-
-        if (_direction.x > Mathf.Epsilon)
-            _directionRight = true;
-        else if (-_direction.x > Mathf.Epsilon)
-            _directionLeft = true;
-        else if (_direction.y > Mathf.Epsilon)
-            _directionUp = true;
-        else if (-_direction.y > Mathf.Epsilon)
-            _directionDown = true;
     }
 
     void SetParentPivot(RectTransform rect)
@@ -122,6 +105,24 @@ public class ListScroller : InteractiveElement
             corner = new Vector2(0.0f, 1.0f);
 
         rect.pivot = rect.anchorMin = rect.anchorMax = corner;
+    }
+
+    void SetDirections()
+    {
+        _directionHorizontal = Mathf.Abs(_direction.x) > Mathf.Epsilon;
+        _directionRight = false;
+        _directionLeft = false;
+        _directionUp = false;
+        _directionDown = false;
+
+        if (_direction.x > Mathf.Epsilon)
+            _directionRight = true;
+        else if (-_direction.x > Mathf.Epsilon)
+            _directionLeft = true;
+        else if (_direction.y > Mathf.Epsilon)
+            _directionUp = true;
+        else if (-_direction.y > Mathf.Epsilon)
+            _directionDown = true;
     }
 
     void SetMaxElementCount()
@@ -238,6 +239,36 @@ public class ListScroller : InteractiveElement
         UpdateElementContent();
     }
 
+    public void UpdateElementContent()
+    {
+        int count = scrollableElements.Count;
+
+        for (int i = 0; i < count; ++i)
+        {
+            if (_infinite)
+            {
+                int finalOffset = (i + _indexOffset) % _scrollData.Count;
+
+                if (finalOffset < 0)
+                    finalOffset = _scrollData.Count + finalOffset;
+
+                scrollableElements[i].SetContent(_scrollData[finalOffset]);
+            }
+            else
+            {
+                if (i + _indexOffset >= _scrollData.Count)
+                    scrollableElements[i].gameObject.SetActive(false);
+                else
+                {
+                    scrollableElements[i].SetContent(_scrollData[i + _indexOffset]);
+                    scrollableElements[i].gameObject.SetActive(true);
+                }
+            }
+        }
+
+        UpdateScrollerPosition();
+    }
+
     void ClampIndexOffset()
     {
         if (_indexOffset < 0)
@@ -256,10 +287,7 @@ public class ListScroller : InteractiveElement
         _indexOffset -= _indexOffset % _rows;
     }
 
-    public int GetDataCount()
-    {
-        return _scrollData.Count;
-    }
+    public int GetDataCount() => _scrollData.Count;
 
     public void SetData(List<object> data)
     {
@@ -270,15 +298,9 @@ public class ListScroller : InteractiveElement
         UpdateData();
     }
 
-    protected virtual int GetStartIndex()
-    {
-        return _startIndex;
-    }
+    protected virtual int GetStartIndex() => _startIndex;
 
-    public void SetStartIndex(int index)
-    {
-        _startIndex = index;
-    }
+    public void SetStartIndex(int index) => _startIndex = index;
 
     public void ScrollToIndex(int index)
     {
@@ -288,15 +310,9 @@ public class ListScroller : InteractiveElement
         _startIndex = previousIndex;
     }
 
-    protected virtual List<object> FilterData(List<object> data)
-    {
-        return data;
-    }
+    protected virtual List<object> FilterData(List<object> data) => data;
 
-    protected virtual List<object> SortData(List<object> data)
-    {
-        return data;
-    }
+    protected virtual List<object> SortData(List<object> data) => data;
 
     public void ClearData()
     {
@@ -540,36 +556,6 @@ public class ListScroller : InteractiveElement
         }
     }
 
-    public void UpdateElementContent()
-    {
-        int count = scrollableElements.Count;
-
-        for (int i = 0; i < count; ++i)
-        {
-            if (_infinite)
-            {
-                int finalOffset = (i + _indexOffset) % _scrollData.Count;
-
-                if (finalOffset < 0)
-                    finalOffset = _scrollData.Count + finalOffset;
-
-                scrollableElements[i].SetContent(_scrollData[finalOffset]);
-            }
-            else
-            {
-                if (i + _indexOffset >= _scrollData.Count)
-                    scrollableElements[i].gameObject.SetActive(false);
-                else
-                {
-                    scrollableElements[i].SetContent(_scrollData[i + _indexOffset]);
-                    scrollableElements[i].gameObject.SetActive(true);
-                }
-            }
-        }
-
-        UpdateScrollerPosition();
-    }
-
     protected override void PointerDownEvent(PointerEventData eventData)
     {
         _startClickPos = eventData.position * CanvasScaleManager.screenScalerRatio;
@@ -680,9 +666,7 @@ public class ListScroller : InteractiveElement
             _lastClickPos = newClickPosition;
         }
         else
-        {
             _clickDifference = 0.0f;
-        }
     }
 
     bool BounceRectsBack()
@@ -743,7 +727,6 @@ public class ListScroller : InteractiveElement
                 return true;
             }
         }
-
         return false;
     }
 
@@ -797,7 +780,6 @@ public class ListScroller : InteractiveElement
                 int count = (Mathf.FloorToInt(diff) + 1) * _rows;
                 SwapLastToFirst(count);
             }
-
             return;
         }
 
@@ -822,20 +804,13 @@ public class ListScroller : InteractiveElement
                 int count = (Mathf.FloorToInt(diff) + 1) * _rows;
                 SwapFirstToLast(count);
             }
-
             return;
         }
     }
 
-    void SwapLastToFirst(int count)
-    {
-        Swap(count, true/*To The Begining*/);
-    }
+    void SwapLastToFirst(int count) => Swap(count, true/*To The Begining*/);
 
-    void SwapFirstToLast(int count)
-    {
-        Swap(count, false/*To The End*/);
-    }
+    void SwapFirstToLast(int count) => Swap(count, false/*To The End*/);
 
     void Swap(int count, bool toBegining)
     {
@@ -896,7 +871,6 @@ public class ListScroller : InteractiveElement
             {
                 element = scrollableElements[0];
                 scrollableElements.RemoveAt(0);
-
 
                 if (_directionRight)
                 {
@@ -1083,20 +1057,12 @@ public class ListScroller : InteractiveElement
             progress = 1.0f;
 
         if (_directionDown)
-        {
             _scroller.anchoredPosition = new Vector2(0.0f, -positionMax * progress);
-        }
         else if (_directionUp)
-        {
             _scroller.anchoredPosition = new Vector2(0.0f, -positionMax * (1.0f - progress));
-        }
         else if (_directionRight)
-        {
             _scroller.anchoredPosition = new Vector2(positionMax * progress, 0.0f);
-        }
         else
-        {
             _scroller.anchoredPosition = new Vector2(positionMax * (1.0f - progress), 0.0f);
-        }
     }
 }
