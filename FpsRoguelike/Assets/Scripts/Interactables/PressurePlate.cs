@@ -23,10 +23,8 @@ public class PressurePlate : MonoBehaviour
     void Awake()
     {
         _standOnObjects = new HashSet<Transform>();
-        if (OnPlatePressed == null)
-            OnPlatePressed = new UnityEvent();
-        if (OnPlateReleased == null)
-            OnPlateReleased = new UnityEvent();
+        OnPlatePressed ??= new UnityEvent();
+        OnPlateReleased ??= new UnityEvent();
     }
 
     private void OnTriggerEnter(Collider other)

@@ -16,10 +16,8 @@ public class GroundedCheck : MonoBehaviour
 
     private void Awake()
     {
-        if (OnGetOffTheGround == null)
-            OnGetOffTheGround = new UnityEvent();
-        if (OnGetGrounded == null)
-            OnGetGrounded = new UnityEvent();
+        OnGetOffTheGround ??= new UnityEvent();
+        OnGetGrounded ??= new UnityEvent();
     }
 
     void Update()

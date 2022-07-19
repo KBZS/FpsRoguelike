@@ -26,10 +26,8 @@ public class ToggleItem : MonoBehaviour, IInteractable
 
     void Awake()
     {
-        if (OnToggleOn == null)
-            OnToggleOn = new UnityEvent();
-        if (OnToggleOff == null)
-            OnToggleOff = new UnityEvent();
+        OnToggleOn ??= new UnityEvent();
+        OnToggleOff ??= new UnityEvent();
         _ñhangeStateCoroutine = StartCoroutine(ChangeState());
     }
 

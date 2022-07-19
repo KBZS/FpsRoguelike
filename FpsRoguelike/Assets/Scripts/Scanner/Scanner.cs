@@ -18,11 +18,8 @@ public class Scanner : MonoBehaviour
 
     void Awake()
     {
-        if (OnScannerViewEnter == null)
-            OnScannerViewEnter = new UnityEventScanerView();
-
-        if (OnScannerViewExit == null)
-            OnScannerViewExit = new UnityEventScanerView();
+        OnScannerViewEnter ??= new UnityEventScanerView();
+        OnScannerViewExit ??= new UnityEventScanerView();
     }
 
     void Start()

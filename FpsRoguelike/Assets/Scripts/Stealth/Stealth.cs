@@ -23,14 +23,10 @@ public class Stealth : MonoBehaviour
 
     void Awake()
     {
-        if (OnGetWorried == null)
-            OnGetWorried = new UnityEventStealth();
-        if (OnReact == null)
-            OnReact = new UnityEventStealth();
-        if (OnLoseTarget == null)
-            OnLoseTarget = new UnityEventStealth();
-        if (OnCalmDown == null)
-            OnCalmDown = new UnityEventStealth();
+        OnGetWorried ??= new UnityEventStealth();
+        OnReact ??= new UnityEventStealth();
+        OnLoseTarget ??= new UnityEventStealth();
+        OnCalmDown ??= new UnityEventStealth();
     }
 
     void Start()

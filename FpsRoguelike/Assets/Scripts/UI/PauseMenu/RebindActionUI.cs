@@ -65,8 +65,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
 
         void OnEnable()
         {
-            if (s_RebindActionUIs == null)
-                s_RebindActionUIs = new List<RebindActionUI>();
+            s_RebindActionUIs ??= new List<RebindActionUI>();
             s_RebindActionUIs.Add(this);
             if (s_RebindActionUIs.Count == 1)
                 InputSystem.onActionChange += OnActionChange;

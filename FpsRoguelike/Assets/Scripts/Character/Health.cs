@@ -15,10 +15,8 @@ public class Health : MonoBehaviour
 
     void Awake()
     {
-        if (OnHealthEnd == null)
-            OnHealthEnd = new UnityEvent();
-        if (OnHealthValueChanged == null)
-            OnHealthValueChanged = new UnityEventHealth();
+        OnHealthEnd ??= new UnityEvent();
+        OnHealthValueChanged ??= new UnityEventHealth();
         _currentHealth = _maxHealth;
     }
 

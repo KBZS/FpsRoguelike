@@ -16,8 +16,7 @@ public class ButtonItem : MonoBehaviour, IInteractable
 
     void Awake()
     {
-        if (OnClick == null)
-            OnClick = new UnityEvent();
+        OnClick ??= new UnityEvent();
     }
 
     public void DoAction()
