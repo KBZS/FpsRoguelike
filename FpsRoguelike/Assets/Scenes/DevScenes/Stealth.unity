@@ -963,6 +963,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 597965278112551990, guid: ae410c9894d56ba4fa843c1aaccaf886, type: 3}
+      propertyPath: m_Text
+      value: Shift
+      objectReference: {fileID: 0}
     - target: {fileID: 2580131012135769865, guid: ae410c9894d56ba4fa843c1aaccaf886, type: 3}
       propertyPath: _health
       value: 
